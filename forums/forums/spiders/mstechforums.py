@@ -9,8 +9,8 @@ class MstechforumsSpider(Spider):
   spider = {}    # for housekeeping
 
   name            = spider['name'] = 'mstechforums'
-  allowed_urls    = spider['allow_urls'] = ['https://social.technet.microsoft.com/']
-  start_urls      = spider['start_urls'] = ['https://social.technet.microsoft.com/Forums/en-US/home']
+  allowed_urls    = spider['allow_urls'] = ['https://social.msdn.microsoft.com/']
+  start_urls      = spider['start_urls'] = ['https://social.msdn.microsoft.com/Forums/en-US/home']
   custom_settings = spider['custom_settings'] = { 'LOG_LEVEL': 'ERROR'}
   print('{}\n{}'.format('*'*50, spider))
 
@@ -35,23 +35,23 @@ class MstechforumsSpider(Spider):
     # 'The search service is down. Please link directly to threads and come back later.'
     # Hence, here set the last page to 500.
 
-    # totalPages = crawl['totalPages'] = 100
-    totalPages = crawl['totalPages'] = 500
+    # totalPages = crawl['totalPages'] = 2   # For testing
+    totalPages = crawl['totalPages'] = 500   # For production
     print('Hard-coded Total Pages to {} due to an identified constraint of the site.'.format(totalPages))
     #-------------------------------------------------------------------
 
     target_urls = [
-      'https://social.technet.microsoft.com/Forums/en-us/home?sort=lastpostdesc&brandIgnore=true&page={}'\
+      'https://social.msdn.microsoft.com/Forums/en-us/home?sort=lastpostdesc&brandIgnore=true&page={}'\
       .format(x) for x in range(1,totalPages+1)  # start from the next page to totalPages
       ]
 
-    print('\nC R A W L I N G ... :-P\n{}\n\n'.format(crawl))
+    print('\nCrawl as You Go... :-P\n{}\n\n[TARGET URL LIST]'.format(crawl))
 
     for url in target_urls:
-      print('\nYielding to the page...{}'.format(url))
+      print('\t{}'.format(url))
       yield Request(url=url, callback=self.parse_threadblock)
 
-    print('\nC R A W L E D !!!  :-)')
+    print('\nC R A W L  N O W  OR  N E V E R\n\tAt utc time: {}  :-)\n'.format(datetime.utcnow()))
 
   def parse_threadblock(self,response):
 
@@ -64,36 +64,36 @@ class MstechforumsSpider(Spider):
     forumsItem = ForumsItem()
 
     for thread in response.css('.threadblock'):
-      print('\n\tScraping the thread...{}'.format(thread))
+      print('\tScraping the thread...{}'.format(thread))
       try:
         forumsItem = {
 
-          'threadTitle': thread.css('.detailscontainer > h3 >a::text')[0].extract(),
+          'threadTitle': thread.css('.detailscontainer > h3 >a::text').extract_first(),
           'threadTitleLink': thread.css('.detailscontainer > h3 >a::attr(href)').extract_first(),
-          'threadSummary': thread.css('.threadSummary::text')[0].extract(),
+          'threadSummary': thread.css('.threadSummary::text').extract_first(),
 
           'category': response.css('div.EyebrowElement > a#categoryBreadcrumb > span::text').extract_first(),
           'categoryLink': response.css('div.EyebrowElement >a#categoryBreadcrumb::attr(href)').extract_first(),
           'subCategory': response.css('div.EyebrowElement.forumBreadcrumb > a > span::text').extract_first(),
           'subCategoryLink': response.css('div.EyebrowElement.forumBreadcrumb >a::attr(href)').extract_first(),
 
-          'votes': int((re.findall('\d+', thread.css('div.votes div::text')[0].extract()))[0]),
-          'threadState': thread.css('.metrics.smallgreytext > span.statefilter > a::text')[0].extract(),
-          'replyCount': int((re.findall('\d+', thread.css('.replycount::text')[0].extract()))[0]),
-          'viewCount': int((re.findall('\d+', thread.css('.viewcount::text')[0].extract()))[0]),
+          'votes': int((re.findall('\d+', thread.css('div.votes div::text').extract_first()))[0]),
+          'threadState': thread.css('.metrics.smallgreytext > span.statefilter > a::text').extract_first(),
+          'replyCount': int((re.findall('\d+', thread.css('.replycount::text').extract_first()))[0]),
+          'viewCount': int((re.findall('\d+', thread.css('.viewcount::text').extract_first()))[0]),
 
-          'createdByName': re.sub(r"\ \-\ $", '', thread.css('.lastpost > a > span::text')[0].extract()),
-          'createdByLink': thread.css('.lastpost a:nth-child(2)::attr(href)').extract(),
-          'createdByTime': thread.css('.lastpost span:nth-child(3)::text').extract(),
+          'createdByName': re.sub(r"\ \-\ $", '', thread.css('.lastpost > a > span::text').extract_first()),
+          'createdByLink': thread.css('.lastpost a:nth-child(2)::attr(href)').extract_first(),
+          'createdByTime': thread.css('.lastpost span:nth-child(3)::text').extract_first(),
 
-          'lastReplyName': re.sub(r"\ \-\ $", '', thread.css('.lastpost > a > span::text')[0].extract()),
-          'lastReplyLink': thread.css('.lastpost > a:nth-child(2)::attr(href)')[0].extract(),
-          'lastReplyTime': thread.css('.lastpost span:nth-child(3)::text')[0].extract()
+          'lastReplyName': re.sub(r"\ \-\ $", '', thread.css('.lastpost > a > span::text').extract_first()),
+          'lastReplyLink': thread.css('.lastpost > a:nth-child(2)::attr(href)').extract_first(),
+          'lastReplyTime': thread.css('.lastpost span:nth-child(3)::text').extract_first()
 
         }
         # print(forumsItem)
         yield forumsItem
-        print('\n\tYielded...')
+        print('\t\tYielded at utc time: {}...'.format(datetime.utcnow()))
 
       except Exception as e:
-        print('Oh, well...{}\n{}'.format('>'*20, e))
+        print('At utc time: {}\nOh, well...{}\n{}'.format(datetime.utcnow(),'>'*20, e))
