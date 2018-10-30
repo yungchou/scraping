@@ -3,6 +3,7 @@ from forums.items import ForumsItem
 import re
 
 from datetime import datetime   # for housekeeping
+print('{}\nThe above timestamp is for postprocessing use.\n'.format(datetime.utcnow()))
 
 class MstechforumsSpider(Spider):
 
