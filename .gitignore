@@ -5,7 +5,7 @@ data
 no.git.push
 rsconnect
 .vscode
-*.pptx
+#*.pptx
 
 # History files
 .Rhistory
