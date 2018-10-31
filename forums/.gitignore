@@ -5,7 +5,7 @@ data
 no.git.push
 rsconnect
 .vscode
-postScraping
+#postScraping
 *.pptx
 
 # History files

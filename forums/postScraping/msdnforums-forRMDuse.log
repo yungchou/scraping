@@ -1,0 +1,19 @@
+2018-10-27 21:23:45.324523
+Timestamp for post=rocessing use
+
+**************************************************
+{'name': 'mstechforums', 'allow_urls': ['https://social.msdn.microsoft.com/'], 'start_urls': ['https://social.msdn.microsoft.com/Forums/en-US/home'], 'custom_settings': {'LOG_LEVEL': 'ERROR'}}
+Hard-coded Total Pages to 500 due to an identified constraint of the site.
+
+Crawl as You Go... :-P
+{'startThread': 1, 'threadsPerPage': 20, 'totalThreads': 2852329, 'totalPages': 500}
+
+[TARGET URL LIST]
+	https://social.msdn.microsoft.com/Forums/en-us/home?sort=lastpostdesc&brandIgnore=true&page=1
+	https://social.msdn.microsoft.com/Forums/en-us/home?sort=lastpostdesc&brandIgnore=true&page=2
+	https://social.msdn.microsoft.com/Forums/en-us/home?sort=lastpostdesc&brandIgnore=true&page=3
+	https://social.msdn.microsoft.com/Forums/en-us/home?sort=lastpostdesc&brandIgnore=true&page=4
+	https://social.msdn.microsoft.com/Forums/en-us/home?sort=lastpostdesc&brandIgnore=true&page=5
+	https://social.msdn.microsoft.com/Forums/en-us/home?sort=lastpostdesc&brandIgnore=true&page=6
+	https://social.msdn.microsoft.com/Forums/en-us/home?sort=lastpostdesc&brandIgnore=true&page=7
+	https://social.msdn.microsoft.com/Forums/en-us/home?sort=lastpostdesc&brandIgnore=true&page=8

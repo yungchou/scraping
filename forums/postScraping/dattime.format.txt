@@ -1,0 +1,4 @@
+from datetime import datetime
+'createdByTime': 
+
+datetime.strptime(thread.css('.lastpost span:nth-child(3)::text').extract(),"%A, %B %d, %Y %I:%M %p"),
