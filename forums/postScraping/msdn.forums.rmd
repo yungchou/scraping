@@ -440,10 +440,10 @@ v  <- forums$votes
 
 ### Start with the first 200 observations
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 fit200 = lm( v200 ~ vc200 + rc200, data = vcrcv)
 summary(fit200)
-cat('Confidence Interval ',confint(fit200))
+#cat('Confidence Interval ',confint(fit200))
 summary(fit200)$coefficients
 
 #print(c('beta0',summary(fit200)$coefficients[1,1]))
@@ -461,10 +461,10 @@ plot(fit200)
 
 ### Take the first 1000 observations
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 fit1000 = lm( v1000 ~ vc1000 + rc1000, data = vcrcv)
 summary(fit1000)
-cat('Confidence Interval ',confint(fit1000))
+#cat('Confidence Interval ',confint(fit1000))
 summary(fit1000)$coefficients
 
 #print(c('beta0',summary(fit200)$coefficients[1,1]))
@@ -473,7 +473,7 @@ summary(fit1000)$coefficients
 ```
 
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 qqnorm(fit1000$residuals)
 qqline(fit1000$residuals)
 plot(fit1000)
@@ -483,10 +483,10 @@ plot(fit1000)
 
 ### Consider the first 2000 observations
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 fit2000 = lm( v2000 ~ vc2000 + rc2000, data = vcrcv)
 summary(fit2000)
-cat('Confidence Interval ',confint(fit2000))
+#cat('Confidence Interval ',confint(fit2000))
 summary(fit2000)$coefficients
 
 #print(c('beta0',summary(fit2000)$coefficients[1,1]))
@@ -495,7 +495,7 @@ summary(fit2000)$coefficients
 ```
 
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 qqnorm(fit2000$residuals)
 qqline(fit2000$residuals)
 plot(fit2000)
@@ -503,10 +503,10 @@ plot(fit2000)
 
 ### Take all observations
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 fitall = lm( v ~ vc + rc, data = vcrcv)
 summary(fitall)
-cat('Confidence Interval ',confint(fitall))
+#cat('Confidence Interval ',confint(fitall))
 summary(fitall)$coefficients
 
 #print(c('beta0',summary(fitall)$coefficients[1,1]))
@@ -515,7 +515,7 @@ summary(fitall)$coefficients
 ```
 
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 qqnorm(log(fitall$residuals))
 qqline(log(fitall$residuals))
 plot(fitall)
@@ -541,7 +541,7 @@ summary(vc.bc)
 
 ## Another Diagnostic (Under investigation)
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 #The following plots are taking code from
 
 #Still looking into the code at this time.
@@ -550,6 +550,10 @@ summary(vc.bc)
 
 # All three
 vcrcv = subset(forums, select=(c('viewCount','replyCount','votes', 'threadState')))
+
+vc200 <- forums$viewCount[0:200]
+rc200 <- forums$replyCount[0:200]
+v200  <- forums$votes[0:200]
 
 RegressionPlots <- function(fit){
   
@@ -639,10 +643,10 @@ RegressionPlots <- function(fit){
   return(plt)
 }
 
-fit1000 = lm( v1000 ~ vc1000 + rc1000 , data = vcrcv)
+fit200_ = lm( v200 ~ vc200 + rc200 , data = vcrcv)
 	
-pfit1  = RegressionPlots(fit1000)
+pfit200  = RegressionPlots(fit200_)
 
-pfit1
+pfit200
 ```
 
