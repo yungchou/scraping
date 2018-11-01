@@ -452,7 +452,7 @@ summary(fit200)$coefficients
 ```
 
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE, eval=FALSE}
 qqnorm(fit200$residuals)
 qqline(fit200$residuals)
 plot(fit200)
@@ -473,7 +473,7 @@ summary(fit1000)$coefficients
 ```
 
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE, eval=FALSE}
 qqnorm(fit1000$residuals)
 qqline(fit1000$residuals)
 plot(fit1000)
@@ -495,7 +495,7 @@ summary(fit2000)$coefficients
 ```
 
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE, eval=FALSE}
 qqnorm(fit2000$residuals)
 qqline(fit2000$residuals)
 plot(fit2000)
@@ -515,7 +515,7 @@ summary(fitall)$coefficients
 ```
 
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE, eval=FALSE}
 qqnorm(log(fitall$residuals))
 qqline(log(fitall$residuals))
 plot(fitall)
