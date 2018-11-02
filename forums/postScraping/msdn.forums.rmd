@@ -191,8 +191,15 @@ An overview of the prepared dataset was the following.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 
-plot(forums, col=forums$threadState)
+#plot(forums, col=forums$threadState)
 
+library(psych)
+pairs.panels(forums, lm = TRUE,
+             method = "pearson", # correlation method
+             hist.col = "#00AFBB",
+             density = TRUE,  # show density plots
+             ellipses = TRUE # show correlation ellipses
+             )
 ```
 
 - The apparent linear relationship with a 45-degree straight line between createdByTime and lastReplyTime was trivial, since for every thread, initially the thread creation time and last reply time would always be the same, and the first a few replies would also near the thread cretion time.
@@ -308,7 +315,15 @@ cor(vcrcv)
 The correlation between among the three is expected. 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-plot(vcrcv, col=forums$threadState)
+#plot(vcrcv, col=forums$threadState)
+
+library(psych)
+pairs.panels(forums, lm = TRUE, pch=21, cex.cor=1, smooth=TRUE, stars=TRUE,
+             method = "pearson", # correlation method
+             hist.col = "#00AFBB",
+             density = TRUE,  # show density plots
+             ellipses = TRUE # show correlation ellipses
+)
 ```
 
 Took a closer view on:
@@ -419,7 +434,7 @@ Here's how this model looked:
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 
 vcrcv = subset(forums, select=(c('viewCount','replyCount','votes', 'threadState')))
-
+               
 vc200 <- forums$viewCount[0:200]
 rc200 <- forums$replyCount[0:200]
 v200  <- forums$votes[0:200]
